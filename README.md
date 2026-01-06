@@ -348,8 +348,8 @@ Dự án này được phát hành dưới giấy phép **MIT License**.
 
 Nếu có bất kỳ câu hỏi hoặc góp ý, vui lòng liên hệ:
 
-- **Email:** your.email@example.com
-- **GitHub:** [@yourusername](https://github.com/yourusername)
+- **Email:** tphn26.work@mgmail.com
+- **GitHub:** [@tetsde](https://github.com/tetsde)
 
 ---
 
