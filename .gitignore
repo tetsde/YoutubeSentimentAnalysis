@@ -1,0 +1,15 @@
+# ===== Selenium / Browser =====
+chrome/
+chromedriver/
+*.app
+
+# ===== Python =====
+__pycache__/
+*.pyc
+
+# ===== Data output =====
+result/
+reports/__pycache__/
+
+# ===== OS =====
+.DS_Store
