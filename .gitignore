@@ -1,15 +1,12 @@
-# ===== Selenium / Browser =====
 chrome/
-chromedriver/
-*.app
-
-# ===== Python =====
+**/chrome/
+**/*.app
+venv/
+.env
 __pycache__/
-*.pyc
-
-# ===== Data output =====
-result/
-reports/__pycache__/
-
-# ===== OS =====
+*.bin
+*.pt
+*.pkl
+data/
+models/
 .DS_Store

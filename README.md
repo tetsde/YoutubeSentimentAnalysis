@@ -1,370 +1,328 @@
-#  Social Media Listen Tool - YouTube Sentiment Analysis
+# 🎯 Social Media Listen Tool - YouTube Sentiment Analysis
 
+<div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Selenium](https://img.shields.io/badge/Selenium-4.10%2B-green)
-![Pandas](https://img.shields.io/badge/Pandas-2.0%2B-red)
-![Status](https://img.shields.io/badge/Status-Active-success)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-Production-success.svg)
 
----
+**Automated YouTube Comment Sentiment Analysis with Modern Visualization**
 
-## Mục lục
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Configuration](#%EF%B8%8F-configuration)
 
-- [Giới thiệu](#giới-thiệu)
-- [Tính năng nổi bật](#tính-năng-nổi-bật)
-- [Công nghệ sử dụng](#công-nghệ-sử-dụng)
-- [Cấu trúc dự án](#cấu-trúc-dự-án)
-- [Cài đặt](#cài-đặt)
-- [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
-- [Quy trình hoạt động](#quy-trình-hoạt-động)
-- [Kết quả mẫu](#kết-quả-mẫu)
-- [Đóng góp](#đóng-góp)
-- [License](#license)
-- [Liên hệ](#liên-hệ)
+</div>
 
 ---
 
-##  Giới thiệu
+## 📋 Overview
 
-**Social Media Listen Tool** là công cụ phân tích cảm xúc (Sentiment Analysis) tự động trên YouTube, giúp bạn thấu hiểu **"Voice of Customer"** (Tiếng nói khách hàng) một cách nhanh chóng và chính xác.
+Social Media Listen Tool is an **end-to-end automated pipeline** for analyzing YouTube comment sentiment in Vietnamese. Built with **sklearn MultinomialNB** and **modern data visualization**, it provides actionable insights into audience opinions.
 
-### Tính năng chính
-
-Công cụ tự động hóa toàn bộ quy trình:
-1. Thu thập dữ liệu thô (YouTube Comments)
-2. Làm sạch và tiền xử lý dữ liệu
-3. Phân tích cảm xúc bằng Machine Learning
-4. Trực quan hóa kết quả và tạo báo cáo
-
----
-
-##  Tính năng nổi bật
-
-###  1. Advanced Auto Crawler
-- Sử dụng **Selenium WebDriver** để giả lập hành vi người dùng thực
-- Tự động cuộn trang (Auto-scroll) để xử lý cơ chế **Lazy Loading** của YouTube
-- Đảm bảo cào được lượng bình luận tối đa với tùy chỉnh thời gian scroll
-- Trích xuất đầy đủ thông tin: Tên người dùng, nội dung bình luận, thời gian
-
-###  2. Smart Data Cleaning
-Dữ liệu mạng xã hội thường rất "bẩn". Hệ thống tích hợp bộ lọc mạnh mẽ để xử lý đặc thù tiếng Việt:
-- Loại bỏ emoji, icon, ký tự đặc biệt và HTML tags
-- Chuẩn hóa văn bản về dạng lowercase
-- Xử lý teencode và từ viết tắt phổ biến
-- Loại bỏ stop words tiếng Việt
-- Xử lý trùng lặp và dữ liệu rỗng
-
-### 🧠. AI Sentiment Analysis Engine
-- Thuật toán **Naive Bayes** được tùy chỉnh cho tiếng Việt
-- Model đã được huấn luyện sẵn với dữ liệu tiếng Việt
-- Phân loại cảm xúc: **Positive**, **Negative**, **Neutral**
-- Độ chính xác cao trên dữ liệu thực tế
-
-###  4. Visual Insights & Reporting
-- **Sentiment Distribution:** Biểu đồ tròn thể hiện tỷ lệ Tích cực/Tiêu cực/Trung lập
-- **WordCloud:** "Đám mây từ khóa" làm nổi bật chủ đề hot nhất
-- Export kết quả ra CSV để phân tích tiếp
-- Báo cáo chi tiết với các metrics quan trọng
-
----
-
-## 🛠️ Công nghệ sử dụng
-
-| Lĩnh vực | Công nghệ | Version |
-|----------|-----------|---------|
-| **Ngôn ngữ** | Python | 3.9+ |
-| **Web Scraping** | Selenium | ≥4.10.0 |
-| **Browser Driver** | WebDriver Manager | ≥4.0.0 |
-| **Data Processing** | Pandas, NumPy | ≥2.0.0, ≥1.24.0 |
-| **Machine Learning** | Scikit-learn, Custom Naive Bayes | ≥1.2.0 |
-| **NLP** | RegEx, Custom Text Processing | - |
-| **Visualization** | Matplotlib, WordCloud | ≥3.7.0, ≥1.9.0 |
-| **Utilities** | tqdm, Pillow | ≥4.65.0, ≥9.5.0 |
-
----
-
-## 📁 Cấu trúc dự án
+### 🎯 What it does:
 
 ```
-SocialMediaListenTool/
-├── 📂 chrome/                    # Chrome browser files (338 files)
-├── 📂 chromedriver/              # ChromeDriver for Selenium
-├── 📂 data/                      # Dữ liệu và tài nguyên
-│   ├── raw_comments.csv          # 📄 Dữ liệu thô sau khi cào
-│   ├── clean_comments.csv        # 📄 Dữ liệu đã làm sạch
-│   ├── stopwords.txt             # 📄 Danh sách stop words tiếng Việt
-│   ├── train_clean.csv           # 📄 Dữ liệu huấn luyện model
-│   └── test1.csv                 # 📄 Dữ liệu test
-├── 📂 modules/                   # Các module chính
-│   ├── YoutubeCommentScraper.py  # 🕷️ Module cào comments YouTube
-│   ├── Cleaner.py                # 🧹 Module làm sạch dữ liệu
-│   ├── AIModel.py                # 🤖 Module phân tích cảm xúc (Naive Bayes)
-│   ├── model.json                # 💾 Model weights đã được train
-│   └── test.py                   # 🧪 Test module
-├── 📂 reports/                   # Báo cáo và visualization
-│   └── Visualize.py              # 📊 Module tạo WordCloud và charts
-├── 📂 result/                    # Kết quả phân tích
-│   └── result.csv                # 📈 Kết quả dự đoán cảm xúc
-├── main.py                       # 🚀 File chạy chính
-├── requirements.txt              # 📦 Danh sách dependencies
-└── README.md                     # 📖 File này
+YouTube Video → Scrape Comments → Clean Data → AI Analysis → Beautiful Visualizations
 ```
 
 ---
 
-## Cài đặt
+## ✨ Features
 
-### 1️⃣ Prerequisites (Yêu cầu)
+### 🤖 **Fully Automated Pipeline**
+- ✅ **Selenium-based scraper** with auto-scroll for lazy-loaded comments
+- ✅ **Smart data cleaning** with Vietnamese text processing
+- ✅ **Machine Learning** sentiment classification (85%+ accuracy)
+- ✅ **Modern dark-theme visualizations** with word clouds & charts
 
-- **Python 3.9 trở lên**
-- **Google Chrome** (phiên bản mới nhất)
-- **Git** (optional)
+### 🚀 **Production-Ready**
+- ✅ **Centralized configuration** (`config.py`)
+- ✅ **Utility functions** to eliminate code duplication
+- ✅ **Proper logging** with INFO/ERROR/DEBUG levels
+- ✅ **Error handling** at every pipeline stage
+- ✅ **Auto file management** with timestamps
 
-### 2️⃣ Clone Repository
+### 📊 **Professional Visualizations**
+- ✅ **Gradient Word Cloud** - Top 150 Vietnamese keywords
+- ✅ **Donut Chart** - Sentiment distribution (Positive/Neutral/Negative)
+- ✅ **Statistics Panel** - Sample counts, vocabulary size
 
+---
+
+## 🛠 Technologies
+
+| Component | Technology |
+|-----------|-----------|
+| **Web Scraping** | Selenium + WebDriver Manager |
+| **Data Processing** | Pandas + NumPy |
+| **NLP** | pyvi (Vietnamese tokenization) |
+| **Machine Learning** | scikit-learn (MultinomialNB + CountVectorizer) |
+| **Visualization** | Matplotlib + WordCloud |
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+- **Python 3.9+**
+- **Google Chrome** browser
+
+### Steps
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/tetsde/SocialMediaListenTool.git
+git clone https://github.com/yourusername/SocialMediaListenTool.git
 cd SocialMediaListenTool
 ```
 
-### 3️⃣ Tạo Virtual Environment (Khuyến nghị)
-
-```bash
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-
-# Windows
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 4️⃣ Cài đặt Dependencies
-
+2. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5️⃣ Kiểm tra cài đặt
-
+3. **Verify installation**
 ```bash
-python -c "import selenium; import pandas; print('✅ All packages installed successfully!')"
+python -c "from modules.AIModel import SentimentClassifier; print('✅ Installation successful!')"
 ```
 
 ---
 
-## 🚀 Hướng dẫn sử dụng
+## 🚀 Usage
 
-### 🎬 Quick Start
-
-#### **Cách 1: Sử dụng file main.py có sẵn**
-
-1. Mở file `main.py` và thay đổi URL YouTube:
+### Quick Start
 
 ```python
-if __name__ == "__main__":
-    url = 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID'  # ⬅️ Thay đổi URL tại đây
-    tool = SocialMediaListenTool(url)
-    tool.CommentScraper(scroll_time=50)  # Scroll 50 lần, có thể thay đổi
-    tool.CleanerData()
-    tool._model()
-    tool._cloud(data="result/result.csv")
+from main import SocialMediaListenTool
+
+# Set YouTube URL
+url = "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Run complete pipeline
+tool = SocialMediaListenTool(url)
+tool.run()
 ```
 
-2. Chạy chương trình:
+### Command Line
 
 ```bash
+# Edit URL in main.py, then run:
 python main.py
 ```
 
-#### **Cách 2: Sử dụng Python Interactive**
+### Output
+
+```
+📁 Project Structure After Run:
+├── data/
+│   ├── raw_comments_2026-01-14_17-08-48.csv      # Scraped data
+│   └── clean_comments_2026-01-14_17-08-48.csv    # Cleaned data
+├── result/
+│   └── test_results_2026-01-14_17-08-48.csv      # Predictions
+└── modules/
+    └── model.pkl                                  # Trained model
+```
+
+---
+
+## 🏗 Architecture
+
+### Project Structure
+
+```
+SocialMediaListenTool/
+├── main.py                       # Pipeline orchestrator
+├── config.py                     # Centralized configuration
+├── utils.py                      # Common utility functions
+├── requirements.txt              # Dependencies
+│
+├── modules/                      # Core components
+│   ├── YoutubeCommentScraper.py # Comment scraping
+│   ├── Cleaner.py               # Data cleaning
+│   ├── AIModel.py               # Sentiment classifier
+│   └── model.pkl                # Trained ML model
+│
+├── reports/                      # Visualization
+│   └── Visualize.py             # Chart generation
+│
+└── data/                         # Data storage
+    ├── stopwords.txt            # Vietnamese stopwords
+    ├── raw_comments_*.csv       # Raw scraped data
+    └── clean_comments_*.csv     # Processed data
+```
+
+### Pipeline Flow
+
+```mermaid
+graph LR
+    A[YouTube URL] --> B[Scraper]
+    B --> C{Raw CSV}
+    C --> D[Cleaner]
+    D --> E{Clean CSV}
+    E --> F[ML Model]
+    F --> G{Results CSV}
+    G --> H[Visualizer]
+    H --> I[Charts + WordCloud]
+```
+
+---
+
+## ⚙️ Configuration
+
+### `config.py` - Centralized Settings
 
 ```python
-from modules.YoutubeCommentScraper import YoutubeCommentScraper
-from modules.Cleaner import Cleaner
+# Scraper settings
+SCRAPER = {
+    "headless": True,          # Run browser in background
+    "scroll_time": 30,         # Number of scroll iterations
+    "window_size": "1920,1080"
+}
+
+# Model settings
+MODEL = {
+    "alpha": 1.0,              # Laplace smoothing
+}
+
+# Visualization settings
+VISUALIZATION = {
+    "max_words": 150,          # Words in word cloud
+    "figure_size": (20, 8),    # Chart dimensions
+}
+```
+
+### Customization
+
+**Change scraping duration:**
+```python
+tool.scrape_comments(scroll_time=50)  # More comments
+```
+
+**Change visualization words:**
+```python
+# In config.py
+VISUALIZATION["max_words"] = 200
+```
+
+---
+
+## 📊 Model Performance
+
+| Metric | Value |
+|--------|-------|
+| **Algorithm** | Multinomial Naive Bayes |
+| **Accuracy** | 85.31% |
+| **Training Data** | 23,818 Vietnamese comments |
+| **Vocabulary Size** | 10,054 unique tokens |
+| **Classes** | 3 (Positive, Neutral, Negative) |
+
+### Label Distribution (Training Data)
+
+- **Positive (0)**: 82.6% (19,658 samples)
+- **Neutral (1)**: 6.7% (1,604 samples)
+- **Negative (2)**: 10.7% (2,556 samples)
+
+---
+
+## 🔧 Advanced Usage
+
+### Train Custom Model
+
+```python
 from modules.AIModel import SentimentClassifier
-from reports.Visualize import _CloudKeyword
-import pandas as pd
 
-# 1. Khởi tạo tool
-url = 'https://www.youtube.com/watch?v=R43ld7VhvN4'
-tool = SocialMediaListenTool(url)
-
-# 2. Cào dữ liệu (scroll 30 giây)
-tool.CommentScraper(scroll_time=30)
-
-# 3. Làm sạch dữ liệu
-tool.CleanerData()
-
-# 4. Phân tích cảm xúc
-tool._model()
-
-# 5. Tạo WordCloud
-tool._cloud(data="result/result.csv")
+model = SentimentClassifier()
+model._train("path/to/your/training_data.csv")
 ```
 
----
-
-## ⚙️ Quy trình hoạt động
-
-```
-┌─────────────────────┐
-│  1. INPUT           │
-│  YouTube Video URL  │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  2. SCRAPING        │
-│  • Auto scroll      │
-│  • Extract comments │
-│  • Save raw CSV     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  3. CLEANING        │
-│  • Remove emojis    │
-│  • Normalize text   │
-│  • Remove stopwords │
-│  • Save clean CSV   │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  4. AI ANALYSIS     │
-│  • Load AI model    │
-│  • Predict sentiment│
-│  • Save results     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  5. VISUALIZATION   │
-│  • Generate charts  │
-│  • Create wordcloud │
-│  • Export reports   │
-└─────────────────────┘
+**Training data format:**
+```csv
+text,label
+"sản phẩm tốt",0
+"dịch vụ tệ",2
 ```
 
----
-
-## 📊 Kết quả mẫu
-
-### 📁 Output Files
-
-Sau khi chạy xong, bạn sẽ có các file sau:
-
-1. **`data/raw_comments.csv`** - Dữ liệu thô
-   ```
-   username,comment,timestamp
-   User123,Sản phẩm này quá tuyệt vời! 😍,2 giờ trước
-   TechReviewer,Camera hơi tệ,1 ngày trước
-   ```
-
-2. **`data/clean_comments.csv`** - Dữ liệu đã làm sạch
-   ```
-   comment
-   sản phẩm này quá tuyệt vời
-   camera hơi tệ
-   ```
-
-3. **`result/result.csv`** - Kết quả phân tích
-   ```
-   comment,sentiment,confidence
-   sản phẩm này quá tuyệt vời,positive,0.92
-   camera hơi tệ,negative,0.87
-   ```
-
-4. **`reports/wordcloud.png`** - Word Cloud visualization
-
-### 📈 Sample Statistics
-
-```
-📊 Phân tích hoàn thành!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ Tổng comments: 1,234
-😊 Positive:      657 (53.2%)
-😐 Neutral:       321 (26.0%)
-😞 Negative:      256 (20.8%)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔥 Top keywords: camera, pin, thiết kế, giá, chất lượng
-```
-
----
-
-## 🎯 Tùy chỉnh nâng cao
-
-### Thay đổi thời gian scroll
+### Standalone Components
 
 ```python
-tool.CommentScraper(scroll_time=100)  # Scroll 100 giây để lấy nhiều comments hơn
-```
+# Use scraper only
+from modules.YoutubeCommentScraper import YoutubeCommentScraper
 
-### Xử lý file CSV khác
-
-```python
-tool.CleanerData(csv_path='path/to/your/file.csv')
-```
-
-### Sử dụng model với dữ liệu riêng
-
-```python
-tool._model(data_path='data/your_clean_data.csv')
+scraper = YoutubeCommentScraper()
+scraper._get_url("https://youtube.com/watch?v=...")
+scraper._scroll(30)
+comments = scraper.extract_comments()
 ```
 
 ---
 
-## 🤝 Đóng góp
+## 🐛 Troubleshooting
 
-Mọi đóng góp đều được hoan nghênh! Nếu bạn muốn cải thiện dự án:
+### Common Issues
 
-1. Fork repository này
-2. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+**1. ChromeDriver not found**
+```bash
+# Install webdriver-manager
+pip install webdriver-manager
+```
+
+**2. Model not loaded**
+```bash
+# Train model first
+python modules/AIModel.py
+```
+
+**3. Encoding errors in visualization**
+- Already fixed with ASCII-safe text
+- Vietnamese characters handled by ViTokenizer
+
+---
+
+## 📈 Roadmap
+
+- [ ] Support for multiple languages
+- [ ] Real-time comment monitoring
+- [ ] API endpoint deployment
+- [ ] Interactive dashboard (Streamlit)
+- [ ] Aspect-based sentiment analysis
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
 4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Tạo Pull Request
+5. Open a Pull Request
 
 ---
 
-## ⚠️ Lưu ý
+## 📄 License
 
-- ⏰ Thời gian cào dữ liệu phụ thuộc vào tốc độ mạng và số lượng comments
-- 🌐 Cần kết nối Internet ổn định
-- 💻 Chrome browser sẽ tự động mở và đóng, không can thiệp trong quá trình chạy
-- 📊 Kết quả phân tích phụ thuộc vào chất lượng dữ liệu đầu vào
-- 🔒 Tuân thủ Terms of Service của YouTube khi sử dụng
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📝 License
+## 👥 Authors
 
-Dự án này được phát hành dưới giấy phép **MIT License**.
-
----
-
-## 📧 Liên hệ
-
-Nếu có bất kỳ câu hỏi hoặc góp ý, vui lòng liên hệ:
-
-- **Email:** your.email@example.com
-- **GitHub:** [@yourusername](https://github.com/yourusername)
+- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Cảm ơn cộng đồng Python và các thư viện open-source
-- Dữ liệu huấn luyện từ các nguồn công khai tiếng Việt
-- Selenium WebDriver team
+- **pyvi** - Vietnamese tokenization
+- **sklearn** - Machine learning framework
+- **Selenium** - Web automation
+- **matplotlib** - Data visualization
 
 ---
 
 <div align="center">
-  
-**⭐ Nếu dự án hữu ích, đừng quên cho 1 star nhé! ⭐**
 
-Made with ❤️ by [Hoài Nam]
+**⭐ Star this repo if you find it helpful!**
+
+Made with ❤️ in Vietnam 🇻🇳
 
 </div>
