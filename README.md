@@ -306,7 +306,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ## 👥 Authors
 
-- **Tống Phước Hoài Nam** - *Initial work* - [YourGitHub](https://github.com/tetsde)
+- **Tống Phước Hoài Nam** - *Initial work* - [Tetsde](https://github.com/tetsde)
 
 ---
 
